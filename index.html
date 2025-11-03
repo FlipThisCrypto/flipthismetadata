@@ -2,17 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlipThisMetadata - Metadata Generator</title>
-    <!-- 1. Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. Load Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- 3. Custom Styles -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -48,46 +45,37 @@
 </head>
 <body class="bg-gradient-to-b from-gray-900 to-black text-gray-200">
 
-    <!-- Main Container -->
     <div class="min-h-screen container mx-auto p-4 sm:p-8">
         <div class="max-w-7xl mx-auto">
             
-            <!-- Header -->
             <div class="text-center mb-8">
                 <h1 class="text-4xl font-bold text-white mb-2">FlipThisMetadata</h1>
-                <p class="text-lg text-orange-500">CHIP-0007 Metadata Generator</p>
+                <p class="text-lg text-orange-500">CHIP-0007 / CHIP-0015 Metadata Generator</p>
             </div>
 
-            <!-- Layout Grid: 1 col on mobile, 2 cols on desktop -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-                <!-- ======== FORM COLUMN ("Metal Panel") ======== -->
                 <div class="bg-gradient-to-r from-gray-600 via-gray-700 to-gray-600 p-6 rounded-lg shadow-2xl border-t border-gray-500 border-b border-gray-800">
                     <form id="metadata-form" class="space-y-6">
                         
-                        <!-- Section 1: Core Info -->
                         <fieldset class="border border-gray-500 p-4 rounded-md">
                             <legend class="text-lg font-medium text-white px-2">Core Info</legend>
                             <div class="space-y-4 pt-2">
-                                <!-- Name -->
                                 <div>
                                     <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Name</label>
                                     <input type="text" id="name" placeholder="e.g., MonkeyZoo: The Battle..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
                                 
-                                <!-- Description -->
                                 <div>
                                     <label for="description" class="block text-sm font-medium text-gray-400 mb-1">Description</label>
                                     <textarea id="description" rows="3" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500" placeholder="e.g., This comic follows..."></textarea>
                                 </div>
 
-                                <!-- Minting Tool -->
                                 <div>
                                     <label for="minting-tool" class="block text-sm font-medium text-gray-400 mb-1">Minting Tool</label>
                                     <input type="text" id="minting-tool" placeholder="e.g., Fiend Studios" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
 
-                                <!-- Sensitive Content -->
                                 <div class="flex items-center">
                                     <input type="checkbox" id="sensitive-content" class="h-4 w-4 bg-gray-950 border-gray-700 text-orange-500 rounded focus:ring-orange-500">
                                     <label for="sensitive-content" class="ml-2 block text-sm text-gray-300">Sensitive Content</label>
@@ -95,39 +83,32 @@
                             </div>
                         </fieldset>
 
-                        <!-- Section 2: Top-Level Attributes (Traits) -->
                         <fieldset class="border border-gray-500 p-4 rounded-md">
                             <legend class="text-lg font-medium text-white px-2">Top-Level Attributes (Traits)</legend>
                             <div id="attributes-container" class="space-y-2 pt-2">
-                                <!-- Dynamic attributes will be injected here -->
-                            </div>
+                                </div>
                             <button type="button" id="add-attribute-button" class="mt-4 w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50">
                                 Add Top-Level Attribute
                             </button>
                         </fieldset>
                         
-                        <!-- Section 3: Collection -->
                         <fieldset class="border border-gray-500 p-4 rounded-md">
                             <legend class="text-lg font-medium text-white px-2">Collection</legend>
                             <div class="space-y-4 pt-2">
-                                <!-- Collection ID -->
                                 <div>
                                     <label for="collection-id" class="block text-sm font-medium text-gray-400 mb-1">Collection ID</label>
                                     <input type="text" id="collection-id" placeholder="e.g., f532c517-..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
 
-                                <!-- Collection Name -->
                                 <div>
                                     <label for="collection-name" class="block text-sm font-medium text-gray-400 mb-1">Collection Name</label>
                                     <input type="text" id="collection-name" placeholder="e.g., FlipThisComics" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
 
-                                <!-- Collection Attributes -->
                                 <div class="border-t border-gray-500 pt-4">
                                     <label class="block text-sm font-medium text-gray-400 mb-2">Collection Attributes</label>
                                     <div id="collection-attributes-container" class="space-y-2">
-                                        <!-- Dynamic collection attributes will be injected here -->
-                                    </div>
+                                        </div>
                                     <button type="button" id="add-collection-attribute-button" class="mt-4 w-full bg-gray-600 hover:bg-gray-700 text-gray-200 font-bold py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
                                         Add Collection Attribute
                                     </button>
@@ -135,11 +116,16 @@
                             </div>
                         </fieldset>
                         
-                        <!-- Section 4: Data -->
                         <fieldset class="border border-gray-500 p-4 rounded-md">
                             <legend class="text-lg font-medium text-white px-2">Data</legend>
-                            <div class="space-y-4 pt-2">
-                                <!-- Data @type -->
+                            
+                            <div class="flex items-center mb-4 pt-2">
+                                <input type="checkbox" id="enable-data-section" class="h-4 w-4 bg-gray-950 border-gray-700 text-orange-500 rounded focus:ring-orange-500">
+                                <label for="enable-data-section" class="ml-2 block text-sm text-gray-300 font-medium">Enable <b>CHIP-0015</b> Data Fields</label>
+                            </div>
+
+                            <div id="data-fields-container" class="space-y-4 pt-2 hidden">
+                                
                                 <div>
                                     <label for="data-type" class="block text-sm font-medium text-gray-400 mb-1">Data @type</label>
                                     <select id="data-type" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
@@ -153,25 +139,21 @@
                                     </select>
                                 </div>
 
-                                <!-- Data URL -->
                                 <div>
                                     <label for="data-url" class="block text-sm font-medium text-gray-400 mb-1">Data URL</label>
                                     <input type="text" id="data-url" placeholder="https://... or ipfs://..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
                                 
-                                <!-- Data encodingFormat -->
                                 <div>
                                     <label for="data-encoding-format" class="block text-sm font-medium text-gray-400 mb-1">Encoding Format</label>
                                     <input type="text" id="data-encoding-format" placeholder="e.g., application/pdf" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
                                 
-                                <!-- Data sha256 -->
                                 <div>
                                     <label for="data-sha256" class="block text-sm font-medium text-gray-400 mb-1">SHA256</label>
                                     <input type="text" id="data-sha256" placeholder="e.g., 143D0B75C8ED..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
 
-                                <!-- Nested Fieldset: Thumbnail -->
                                 <fieldset class="border border-gray-500 p-3 rounded-md">
                                     <legend class="text-md font-medium text-gray-300 px-2">Thumbnail</legend>
                                     <div class="space-y-4 pt-2">
@@ -201,7 +183,6 @@
                                     </div>
                                 </fieldset>
 
-                                <!-- Nested Fieldset: Creator -->
                                 <fieldset class="border border-gray-500 p-3 rounded-md">
                                     <legend class="text-md font-medium text-gray-300 px-2">Creator</legend>
                                     <div class="space-y-4 pt-2">
@@ -222,7 +203,6 @@
                                             <input type="text" id="creator-url" placeholder="https://mintgarden.io/..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                         </div>
                                         
-                                        <!-- Nested Fieldset: Identifier -->
                                         <fieldset class="border border-gray-600 p-3 rounded-md">
                                             <legend class="text-sm font-medium text-gray-400 px-2">Identifier</legend>
                                             <div class="space-y-4 pt-2">
@@ -251,40 +231,30 @@
                     </form>
                 </div>
 
-                <!-- ======== OUTPUT COLUMN ("Inset Panel") ======== -->
                 <div class="lg:sticky lg:top-8 h-full">
                     <div class="bg-gray-950 p-6 rounded-lg shadow-2xl border border-gray-700 h-full flex flex-col">
                         <h2 class="text-xl font-semibold text-white mb-4">Generated Metadata</h2>
                         
-                        <!-- Button Row -->
                         <div class="grid grid-cols-2 gap-4 mb-4">
-                            <!-- Copy Button -->
                             <button id="copy-button" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50">
                                 Copy to Clipboard
                             </button>
-                            <!-- Reset Button -->
                             <button id="reset-button" class="w-full bg-gray-600 hover:bg-gray-700 text-gray-200 font-bold py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
                                 Reset Form
                             </button>
                         </div>
                         
-                        <!-- JSON Output -->
                         <div class="flex-grow bg-gray-950 rounded-md p-4 overflow-auto border border-orange-500">
                             <pre><code id="json-output" class="text-sm font-mono whitespace-pre-wrap break-words"></code></pre>
                         </div>
                     </div>
                 </div>
                 
-            </div> <!-- End Grid -->
-        </div>
-    </div> <!-- End Main Container -->
-
-    <!-- Clipboard Success Message (Hidden by default) -->
-    <div id="copy-message" class="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg" style="display: none; opacity: 0; transition: opacity 0.5s;">
+            </div> </div>
+    </div> <div id="copy-message" class="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg" style="display: none; opacity: 0; transition: opacity 0.5s;">
         Copied to clipboard!
     </div>
 
-    <!-- ======== JAVASCRIPT LOGIC ======== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- 1. Select DOM Elements ---
@@ -306,6 +276,10 @@
             const collectionAttributesContainer = document.getElementById('collection-attributes-container');
             const addCollectionAttributeButton = document.getElementById('add-collection-attribute-button');
             
+            // NEW: Data Section Toggle
+            const enableDataSectionCheckbox = document.getElementById('enable-data-section');
+            const dataFieldsContainer = document.getElementById('data-fields-container');
+
             // Data
             const dataTypeSelect = document.getElementById('data-type');
             const dataUrlInput = document.getElementById('data-url');
@@ -338,7 +312,7 @@
             // --- 2. Base JSON Template ---
             function getBaseJson() {
                 return {
-                  "format": "CHIP-0007",
+                  "format": "CHIP-0007", // Default to CHIP-0007
                   "name": "",
                   "description": "",
                   "minting_tool": "",
@@ -348,17 +322,8 @@
                     "id": "",
                     "name": "",
                     "attributes": []
-                  },
-                  "data": {
-                    "@context": "https://schema.org/",
-                    "@type": "",
-                    "encodingFormat": "",
-                    "name": "",
-                    "url": "",
-                    "sha256": "",
-                    "thumbnail": {},
-                    "creator": {}
                   }
+                  // The "data" block will be added dynamically in generateJson()
                 };
             }
             
@@ -405,10 +370,16 @@
             }
 
             /**
-             * Checks if an object has any non-empty string values.
+             * Checks if an object has any non-empty string values (excluding properties that are just empty objects).
              */
             function isObjectPopulated(obj) {
-                return Object.values(obj).some(value => value && typeof value === 'string' && value.trim() !== '');
+                return Object.values(obj).some(value => {
+                    if (value === null || value === undefined) return false;
+                    if (typeof value === 'string') return value.trim() !== '';
+                    if (Array.isArray(value)) return value.length > 0;
+                    if (typeof value === 'object') return Object.keys(value).length > 0 && isObjectPopulated(value);
+                    return false;
+                });
             }
 
             /**
@@ -455,53 +426,92 @@
                     }
                 });
 
-                // 5. Populate Data
-                metadata.data["@type"] = dataTypeSelect.value || "";
-                metadata.data.url = dataUrlInput.value || "";
-                metadata.data.encodingFormat = dataEncodingFormatInput.value || "";
-                metadata.data.sha256 = dataSha256Input.value || "";
-                metadata.data.name = metadata.name; // Automatically copy from top-level name
+                // 5. Populate Data (CHIP-0015 Logic)
+                const isDataSectionEnabled = enableDataSectionCheckbox.checked;
 
-                // 5a. Populate Data.thumbnail (and check if it has data)
-                const thumbnail = {
-                    "@type": thumbnailTypeSelect.value || "",
-                    "encodingFormat": thumbnailEncodingFormatInput.value || "",
-                    "name": thumbnailNameInput.value || "",
-                    "url": thumbnailUrlInput.value || "",
-                    "sha256": thumbnailSha256Input.value || ""
-                };
-                if (isObjectPopulated(thumbnail)) {
-                    metadata.data.thumbnail = thumbnail;
-                } else {
-                    delete metadata.data.thumbnail; // Remove if empty
-                }
-                
-                // 5b. Populate Data.creator (and check if it has data)
-                const creator = {
-                    "@type": creatorTypeSelect.value || "",
-                    "name": creatorNameInput.value || "",
-                    "url": creatorUrlInput.value || "",
-                    "identifier": {}
-                };
+                if (isDataSectionEnabled) {
+                    // Start building the data object
+                    let data = {
+                        "@context": "https://schema.org/",
+                        "@type": dataTypeSelect.value || "",
+                        "encodingFormat": dataEncodingFormatInput.value || "",
+                        "name": metadata.name, // Automatically copy from top-level name
+                        "url": dataUrlInput.value || "",
+                        "sha256": dataSha256Input.value || ""
+                    };
 
-                // 5c. Populate Data.creator.identifier (and check if it has data)
-                const identifier = {
-                    "@type": identifierTypeSelect.value || "",
-                    "propertyID": identifierPropertyIDInput.value || "",
-                    "value": identifierValueInput.value || ""
-                };
-                
-                if (isObjectPopulated(identifier)) {
-                    creator.identifier = identifier;
-                } else {
-                    delete creator.identifier; // Remove if empty
-                }
+                    // 5a. Populate Data.creator
+                    let creator = {
+                        "@type": creatorTypeSelect.value || "",
+                        "name": creatorNameInput.value || "",
+                        "url": creatorUrlInput.value || "",
+                    };
 
-                // Check if creator object has any data (including its populated identifier)
-                if (isObjectPopulated(creator) || creator.identifier) {
-                    metadata.data.creator = creator;
-                } else {
-                    delete metadata.data.creator; // Remove if empty
+                    // 5c. Populate Data.creator.identifier
+                    const identifier = {
+                        "@type": identifierTypeSelect.value || "",
+                        "propertyID": identifierPropertyIDInput.value || "",
+                        "value": identifierValueInput.value || ""
+                    };
+                    
+                    if (isObjectPopulated(identifier)) {
+                        creator.identifier = identifier;
+                    } 
+                    
+                    // Cleanup empty strings from the creator object before check
+                    Object.keys(creator).forEach(key => {
+                        if (creator[key] === "") {
+                            delete creator[key];
+                        }
+                    });
+
+                    // Check if creator object has any data (including its populated identifier)
+                    if (isObjectPopulated(creator)) {
+                        data.creator = creator;
+                    } 
+
+                    // 5b. Populate Data.thumbnail
+                    let thumbnail = {
+                        "@type": thumbnailTypeSelect.value || "",
+                        "encodingFormat": thumbnailEncodingFormatInput.value || "",
+                        "name": thumbnailNameInput.value || "",
+                        "url": thumbnailUrlInput.value || "",
+                        "sha256": thumbnailSha256Input.value || ""
+                    };
+
+                    // Cleanup empty strings from the thumbnail object before check
+                    Object.keys(thumbnail).forEach(key => {
+                        if (thumbnail[key] === "") {
+                            delete thumbnail[key];
+                        }
+                    });
+                    
+                    if (isObjectPopulated(thumbnail)) {
+                        data.thumbnail = thumbnail;
+                    } 
+                    
+                    // Cleanup empty strings from the data object for a cleaner JSON
+                    Object.keys(data).forEach(key => {
+                        if (data[key] === "") {
+                            delete data[key];
+                        }
+                    });
+
+                    // Check if the overall data object is populated enough to be included
+                    // We check for fields other than @context and name (which are auto-filled/copied)
+                    const requiredDataFields = ["@type", "encodingFormat", "url", "sha256", "thumbnail", "creator"];
+                    const isDataPopulated = requiredDataFields.some(key => {
+                        const value = data[key];
+                        if (value === undefined) return false;
+                        if (typeof value === 'string') return value.trim() !== '';
+                        if (typeof value === 'object') return Object.keys(value).length > 0;
+                        return false;
+                    });
+
+                    if (isDataPopulated) {
+                        metadata.data = data;
+                        metadata.format = "CHIP-0015"; // Set format to CHIP-0015
+                    }
                 }
 
                 // 6. Display the JSON
@@ -510,7 +520,6 @@
 
             /**
              * Copies text to the clipboard.
-             * (No changes from previous version)
              */
             function copyText(text) {
                 const tempTextarea = document.createElement('textarea');
@@ -530,7 +539,6 @@
             
             /**
              * Copies the content of the JSON output to the clipboard.
-             * (No changes from previous version)
              */
             function copyJsonToClipboard() {
                 const textToCopy = jsonOutput.textContent;
@@ -540,7 +548,6 @@
             
             /**
              * Shows the "Copied!" message.
-             * (No changes from previous version)
              */
             function showCopyMessage(isError, customMessage = "") {
                 if(isError) {
@@ -582,7 +589,11 @@
                 collectionNameInput.value = '';
                 collectionAttributesContainer.innerHTML = '';
                 
-                // Reset Data
+                // NEW: Reset Data Toggle and Fields
+                enableDataSectionCheckbox.checked = false;
+                dataFieldsContainer.classList.add('hidden'); // Hide the container
+                
+                // Reset Data fields (inside the now hidden container)
                 dataTypeSelect.value = '';
                 dataUrlInput.value = '';
                 dataEncodingFormatInput.value = '';
@@ -626,6 +637,16 @@
             addAttributeButton.addEventListener('click', () => {
                 addAttributeRow(attributesContainer, 'trait_type', 'value', 'Trait Type (e.g., Category)', 'Value (e.g., Learning Guide)');
             });
+
+            // NEW: Data Section Visibility Toggle
+            enableDataSectionCheckbox.addEventListener('change', () => {
+                if (enableDataSectionCheckbox.checked) {
+                    dataFieldsContainer.classList.remove('hidden');
+                } else {
+                    dataFieldsContainer.classList.add('hidden');
+                }
+                generateJson(); // Update JSON when the toggle state changes
+            });
             
             // --- 5. Initial Setup ---
             generateJson();
@@ -634,4 +655,3 @@
 
 </body>
 </html>
-
