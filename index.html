@@ -2,17 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlipThisMetadata - Metadata Generator</title>
-    <!-- 1. Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. Load Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- 3. Custom Styles -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -43,51 +40,55 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
+        }
+        /* Drop zone styles */
+        .drop-zone {
+            transition: all 0.2s ease;
+        }
+        .drop-zone.drag-over {
+            border-color: #f97316; /* orange-500 */
+            background-color: rgba(249, 115, 22, 0.1);
+        }
+        /* Transition for autofill flash */
+        .input-flash {
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
     </style>
 </head>
 <body class="bg-gradient-to-b from-gray-900 to-black text-gray-200">
 
-    <!-- Main Container -->
     <div class="min-h-screen container mx-auto p-4 sm:p-8">
         <div class="max-w-7xl mx-auto">
             
-            <!-- Header -->
             <div class="text-center mb-8">
                 <h1 class="text-4xl font-bold text-white mb-2">FlipThisMetadata</h1>
-                <p class="text-lg text-orange-500">CHIP-0007 Metadata Generator</p>
+                <p class="text-lg text-orange-500">CHIP-0007 / CHIP-0015 Metadata Generator</p>
             </div>
 
-            <!-- Layout Grid: 1 col on mobile, 2 cols on desktop -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-                <!-- ======== FORM COLUMN ("Metal Panel") ======== -->
                 <div class="bg-gradient-to-r from-gray-600 via-gray-700 to-gray-600 p-6 rounded-lg shadow-2xl border-t border-gray-500 border-b border-gray-800">
                     <form id="metadata-form" class="space-y-6">
                         
-                        <!-- Section 1: Core Info -->
                         <fieldset class="border border-gray-500 p-4 rounded-md">
                             <legend class="text-lg font-medium text-white px-2">Core Info</legend>
                             <div class="space-y-4 pt-2">
-                                <!-- Name -->
                                 <div>
                                     <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Name</label>
                                     <input type="text" id="name" placeholder="e.g., MonkeyZoo: The Battle..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
                                 
-                                <!-- Description -->
                                 <div>
                                     <label for="description" class="block text-sm font-medium text-gray-400 mb-1">Description</label>
                                     <textarea id="description" rows="3" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500" placeholder="e.g., This comic follows..."></textarea>
                                 </div>
 
-                                <!-- Minting Tool -->
                                 <div>
                                     <label for="minting-tool" class="block text-sm font-medium text-gray-400 mb-1">Minting Tool</label>
                                     <input type="text" id="minting-tool" placeholder="e.g., Fiend Studios" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
 
-                                <!-- Sensitive Content -->
                                 <div class="flex items-center">
                                     <input type="checkbox" id="sensitive-content" class="h-4 w-4 bg-gray-950 border-gray-700 text-orange-500 rounded focus:ring-orange-500">
                                     <label for="sensitive-content" class="ml-2 block text-sm text-gray-300">Sensitive Content</label>
@@ -95,39 +96,38 @@
                             </div>
                         </fieldset>
 
-                        <!-- Section 2: Top-Level Attributes (Traits) -->
                         <fieldset class="border border-gray-500 p-4 rounded-md">
                             <legend class="text-lg font-medium text-white px-2">Top-Level Attributes (Traits)</legend>
                             <div id="attributes-container" class="space-y-2 pt-2">
-                                <!-- Dynamic attributes will be injected here -->
-                            </div>
+                                </div>
                             <button type="button" id="add-attribute-button" class="mt-4 w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50">
                                 Add Top-Level Attribute
                             </button>
                         </fieldset>
                         
-                        <!-- Section 3: Collection -->
                         <fieldset class="border border-gray-500 p-4 rounded-md">
                             <legend class="text-lg font-medium text-white px-2">Collection</legend>
                             <div class="space-y-4 pt-2">
-                                <!-- Collection ID -->
                                 <div>
-                                    <label for="collection-id" class="block text-sm font-medium text-gray-400 mb-1">Collection ID</label>
-                                    <input type="text" id="collection-id" placeholder="e.g., f532c517-..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                    <label for="collection-id" class="block text-sm font-medium text-gray-400 mb-1">Collection ID (UUID)</label>
+                                    <div class="flex space-x-2">
+                                        <input type="text" id="collection-id" placeholder="e.g., f532c517-..." class="flex-grow bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                        <button type="button" id="generate-uuid-button" class="bg-gray-800 hover:bg-gray-900 text-orange-500 border border-gray-600 font-semibold py-2 px-3 rounded-md transition duration-200 text-sm whitespace-nowrap">
+                                            Generate UUID
+                                        </button>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">Generates a standard v4 UUID (8-4-4-4-12 format).</p>
                                 </div>
 
-                                <!-- Collection Name -->
                                 <div>
                                     <label for="collection-name" class="block text-sm font-medium text-gray-400 mb-1">Collection Name</label>
                                     <input type="text" id="collection-name" placeholder="e.g., FlipThisComics" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
 
-                                <!-- Collection Attributes -->
                                 <div class="border-t border-gray-500 pt-4">
                                     <label class="block text-sm font-medium text-gray-400 mb-2">Collection Attributes</label>
                                     <div id="collection-attributes-container" class="space-y-2">
-                                        <!-- Dynamic collection attributes will be injected here -->
-                                    </div>
+                                        </div>
                                     <button type="button" id="add-collection-attribute-button" class="mt-4 w-full bg-gray-600 hover:bg-gray-700 text-gray-200 font-bold py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
                                         Add Collection Attribute
                                     </button>
@@ -135,11 +135,48 @@
                             </div>
                         </fieldset>
                         
-                        <!-- Section 4: Data -->
                         <fieldset class="border border-gray-500 p-4 rounded-md">
                             <legend class="text-lg font-medium text-white px-2">Data</legend>
-                            <div class="space-y-4 pt-2">
-                                <!-- Data @type -->
+                            
+                            <div class="flex items-center mb-4 pt-2">
+                                <input type="checkbox" id="enable-data-section" class="h-4 w-4 bg-gray-950 border-gray-700 text-orange-500 rounded focus:ring-orange-500">
+                                <label for="enable-data-section" class="ml-2 block text-sm text-gray-300 font-medium">Enable <b>CHIP-0015</b> Data Fields</label>
+                            </div>
+
+                            <div id="data-fields-container" class="space-y-4 pt-2 hidden">
+                                
+                                <!-- SHA256 Generator Tool -->
+                                <div class="bg-gray-800/50 p-4 rounded-md border border-orange-500/30 mb-6">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="text-sm font-bold text-orange-400">SHA256 Hash Tool</h3>
+                                        <span class="text-xs text-gray-500 bg-gray-900 px-2 py-1 rounded">Drag & Drop</span>
+                                    </div>
+                                    
+                                    <div id="drop-zone" class="drop-zone border-2 border-dashed border-gray-600 rounded-md p-4 text-center cursor-pointer bg-gray-900/50 hover:bg-gray-900 transition-colors relative group">
+                                        <div class="pointer-events-none">
+                                            <p class="text-gray-300 text-sm font-medium group-hover:text-white">Drop file here to hash</p>
+                                            <p class="text-xs text-gray-500 mt-1">or click to browse</p>
+                                        </div>
+                                        <input type="file" id="file-input" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                    </div>
+                                    
+                                    <div class="mt-3 flex items-center space-x-2">
+                                        <div class="flex-grow">
+                                            <label for="hash-target" class="block text-xs text-gray-400 mb-1">Auto-fill Target:</label>
+                                            <select id="hash-target" class="w-full bg-gray-950 border border-gray-700 text-sm text-gray-300 rounded p-1.5 focus:ring-1 focus:ring-orange-500">
+                                                <option value="data-url">Data URL (First Input)</option>
+                                                <option value="data-sha256" selected>Data SHA256 (Main Asset)</option>
+                                                <option value="thumbnail-sha256">Thumbnail SHA256</option>
+                                            </select>
+                                        </div>
+                                        <div class="hidden" id="hash-loader">
+                                            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-orange-500 mt-5"></div>
+                                        </div>
+                                    </div>
+                                    <div id="hash-feedback" class="mt-2 text-xs font-mono text-green-400 hidden break-all"></div>
+                                </div>
+                                <!-- End Tool -->
+
                                 <div>
                                     <label for="data-type" class="block text-sm font-medium text-gray-400 mb-1">Data @type</label>
                                     <select id="data-type" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
@@ -153,25 +190,24 @@
                                     </select>
                                 </div>
 
-                                <!-- Data URL -->
                                 <div>
-                                    <label for="data-url" class="block text-sm font-medium text-gray-400 mb-1">Data URL</label>
-                                    <input type="text" id="data-url" placeholder="https://... or ipfs://..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                    <label class="block text-sm font-medium text-gray-400 mb-1">Data URL(s)</label>
+                                    <div id="data-urls-container" class="space-y-2"></div>
+                                    <button type="button" id="add-data-url-button" class="mt-2 text-xs bg-gray-800 hover:bg-gray-700 text-orange-400 border border-gray-600 font-semibold py-1 px-3 rounded transition duration-200">
+                                        + Add Another URL
+                                    </button>
                                 </div>
                                 
-                                <!-- Data encodingFormat -->
                                 <div>
                                     <label for="data-encoding-format" class="block text-sm font-medium text-gray-400 mb-1">Encoding Format</label>
-                                    <input type="text" id="data-encoding-format" placeholder="e.g., application/pdf" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                    <input type="text" id="data-encoding-format" class="input-flash w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500" placeholder="e.g., application/pdf">
                                 </div>
                                 
-                                <!-- Data sha256 -->
                                 <div>
                                     <label for="data-sha256" class="block text-sm font-medium text-gray-400 mb-1">SHA256</label>
                                     <input type="text" id="data-sha256" placeholder="e.g., 143D0B75C8ED..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                 </div>
 
-                                <!-- Nested Fieldset: Thumbnail -->
                                 <fieldset class="border border-gray-500 p-3 rounded-md">
                                     <legend class="text-md font-medium text-gray-300 px-2">Thumbnail</legend>
                                     <div class="space-y-4 pt-2">
@@ -184,15 +220,18 @@
                                         </div>
                                         <div>
                                             <label for="thumbnail-encoding-format" class="block text-sm font-medium text-gray-400 mb-1">Thumbnail Encoding Format</label>
-                                            <input type="text" id="thumbnail-encoding-format" placeholder="e.g., image/png" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                            <input type="text" id="thumbnail-encoding-format" class="input-flash w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500" placeholder="e.g., image/png">
                                         </div>
                                         <div>
                                             <label for="thumbnail-name" class="block text-sm font-medium text-gray-400 mb-1">Thumbnail Name</label>
                                             <input type="text" id="thumbnail-name" placeholder="e.g., MZ1iconimage.png" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                         </div>
                                         <div>
-                                            <label for="thumbnail-url" class="block text-sm font-medium text-gray-400 mb-1">Thumbnail URL</LabeL>
-                                            <input type="text" id="thumbnail-url" placeholder="https://... or ipfs://..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                                            <label class="block text-sm font-medium text-gray-400 mb-1">Thumbnail URL(s)</label>
+                                            <div id="thumbnail-urls-container" class="space-y-2"></div>
+                                            <button type="button" id="add-thumbnail-url-button" class="mt-2 text-xs bg-gray-800 hover:bg-gray-700 text-orange-400 border border-gray-600 font-semibold py-1 px-3 rounded transition duration-200">
+                                                + Add Another URL
+                                            </button>
                                         </div>
                                         <div>
                                             <label for="thumbnail-sha256" class="block text-sm font-medium text-gray-400 mb-1">Thumbnail SHA256</label>
@@ -201,7 +240,6 @@
                                     </div>
                                 </fieldset>
 
-                                <!-- Nested Fieldset: Creator -->
                                 <fieldset class="border border-gray-500 p-3 rounded-md">
                                     <legend class="text-md font-medium text-gray-300 px-2">Creator</legend>
                                     <div class="space-y-4 pt-2">
@@ -222,7 +260,6 @@
                                             <input type="text" id="creator-url" placeholder="https://mintgarden.io/..." class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                         </div>
                                         
-                                        <!-- Nested Fieldset: Identifier -->
                                         <fieldset class="border border-gray-600 p-3 rounded-md">
                                             <legend class="text-sm font-medium text-gray-400 px-2">Identifier</legend>
                                             <div class="space-y-4 pt-2">
@@ -231,6 +268,8 @@
                                                     <select id="identifier-type" class="w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                                         <option value="">Select identifier type...</option>
                                                         <option value="PropertyValue">PropertyValue</option>
+                                                        <option value="URL">URL</option>
+                                                        <option value="Text">Text</option>
                                                     </select>
                                                 </div>
                                                 <div>
@@ -251,40 +290,30 @@
                     </form>
                 </div>
 
-                <!-- ======== OUTPUT COLUMN ("Inset Panel") ======== -->
                 <div class="lg:sticky lg:top-8 h-full">
                     <div class="bg-gray-950 p-6 rounded-lg shadow-2xl border border-gray-700 h-full flex flex-col">
                         <h2 class="text-xl font-semibold text-white mb-4">Generated Metadata</h2>
                         
-                        <!-- Button Row -->
                         <div class="grid grid-cols-2 gap-4 mb-4">
-                            <!-- Copy Button -->
                             <button id="copy-button" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50">
                                 Copy to Clipboard
                             </button>
-                            <!-- Reset Button -->
                             <button id="reset-button" class="w-full bg-gray-600 hover:bg-gray-700 text-gray-200 font-bold py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
                                 Reset Form
                             </button>
                         </div>
                         
-                        <!-- JSON Output -->
                         <div class="flex-grow bg-gray-950 rounded-md p-4 overflow-auto border border-orange-500">
                             <pre><code id="json-output" class="text-sm font-mono whitespace-pre-wrap break-words"></code></pre>
                         </div>
                     </div>
                 </div>
                 
-            </div> <!-- End Grid -->
-        </div>
-    </div> <!-- End Main Container -->
-
-    <!-- Clipboard Success Message (Hidden by default) -->
-    <div id="copy-message" class="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg" style="display: none; opacity: 0; transition: opacity 0.5s;">
+            </div> </div>
+    </div> <div id="copy-message" class="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg" style="display: none; opacity: 0; transition: opacity 0.5s;">
         Copied to clipboard!
     </div>
 
-    <!-- ======== JAVASCRIPT LOGIC ======== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- 1. Select DOM Elements ---
@@ -302,13 +331,27 @@
 
             // Collection
             const collectionIdInput = document.getElementById('collection-id');
+            const generateUuidButton = document.getElementById('generate-uuid-button'); 
             const collectionNameInput = document.getElementById('collection-name');
             const collectionAttributesContainer = document.getElementById('collection-attributes-container');
             const addCollectionAttributeButton = document.getElementById('add-collection-attribute-button');
             
+            // Data Section Toggle & Tools
+            const enableDataSectionCheckbox = document.getElementById('enable-data-section');
+            const dataFieldsContainer = document.getElementById('data-fields-container');
+            
+            // Hash Tool Elements
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('file-input');
+            const hashTargetSelect = document.getElementById('hash-target');
+            const hashFeedback = document.getElementById('hash-feedback');
+            const hashLoader = document.getElementById('hash-loader');
+
             // Data
             const dataTypeSelect = document.getElementById('data-type');
-            const dataUrlInput = document.getElementById('data-url');
+            const dataUrlsContainer = document.getElementById('data-urls-container');
+            const addDataUrlButton = document.getElementById('add-data-url-button');
+            
             const dataEncodingFormatInput = document.getElementById('data-encoding-format');
             const dataSha256Input = document.getElementById('data-sha256');
 
@@ -316,7 +359,9 @@
             const thumbnailTypeSelect = document.getElementById('thumbnail-type');
             const thumbnailEncodingFormatInput = document.getElementById('thumbnail-encoding-format');
             const thumbnailNameInput = document.getElementById('thumbnail-name');
-            const thumbnailUrlInput = document.getElementById('thumbnail-url');
+            const thumbnailUrlsContainer = document.getElementById('thumbnail-urls-container'); 
+            const addThumbnailUrlButton = document.getElementById('add-thumbnail-url-button');
+
             const thumbnailSha256Input = document.getElementById('thumbnail-sha256');
 
             // Data - Creator
@@ -335,10 +380,24 @@
             const resetButton = document.getElementById('reset-button');
             const copyMessage = document.getElementById('copy-message');
 
+            // --- Encoding Maps ---
+            const dataEncodingMap = {
+                'DigitalDocument': 'application/pdf',
+                'WebContent': 'text/html',
+                'ComicBook': 'application/pdf',
+                'VideoObject': 'video/mp4',
+                'ImageObject': 'image/png',
+                'AudioObject': 'audio/mpeg'
+            };
+
+            const thumbnailEncodingMap = {
+                'ImageObject': 'image/png' // Thumbnails are almost always images
+            };
+
             // --- 2. Base JSON Template ---
             function getBaseJson() {
                 return {
-                  "format": "CHIP-0007",
+                  "format": "CHIP-0007", // Default to CHIP-0007
                   "name": "",
                   "description": "",
                   "minting_tool": "",
@@ -348,25 +407,48 @@
                     "id": "",
                     "name": "",
                     "attributes": []
-                  },
-                  "data": {
-                    "@context": "https://schema.org/",
-                    "@type": "",
-                    "encodingFormat": "",
-                    "name": "",
-                    "url": "",
-                    "sha256": "",
-                    "thumbnail": {},
-                    "creator": {}
                   }
                 };
             }
             
             // --- 3. Core Functions ---
             
-            /**
-             * Adds a new attribute row to a specified container.
-             */
+            // Helper: Add URL Row
+            function addUrlRow(container, value = "", isRemovable = true) {
+                const wrapper = document.createElement('div');
+                wrapper.className = "flex items-center space-x-2 url-row";
+                
+                const input = document.createElement('input');
+                input.type = "text";
+                input.className = "url-input w-full bg-gray-950 border border-gray-700 text-gray-200 rounded-md p-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500";
+                input.placeholder = "https://... or ipfs://...";
+                input.value = value;
+                
+                // Add ID to first input of data URLs for the hash tool targeting
+                if (container === dataUrlsContainer && container.children.length === 0) {
+                    input.id = "data-url"; // Re-assign ID for hash tool
+                }
+
+                input.addEventListener('input', generateJson);
+
+                wrapper.appendChild(input);
+
+                if (isRemovable) {
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = "button";
+                    removeBtn.className = "remove-attribute-button text-red-400 hover:text-red-300 font-bold ml-2";
+                    removeBtn.innerHTML = "&times;";
+                    removeBtn.title = "Remove URL";
+                    removeBtn.onclick = () => {
+                        wrapper.remove();
+                        generateJson();
+                    };
+                    wrapper.appendChild(removeBtn);
+                }
+
+                container.appendChild(wrapper);
+            }
+
             function addAttributeRow(container, typeKey, valueKey, typePlaceholder, valuePlaceholder) {
                 const row = document.createElement('div');
                 row.className = 'attribute-row flex items-center space-x-2';
@@ -404,26 +486,34 @@
                 container.appendChild(row);
             }
 
-            /**
-             * Checks if an object has any non-empty string values.
-             */
             function isObjectPopulated(obj) {
-                return Object.values(obj).some(value => value && typeof value === 'string' && value.trim() !== '');
+                return Object.values(obj).some(value => {
+                    if (value === null || value === undefined) return false;
+                    if (typeof value === 'string') return value.trim() !== '';
+                    if (Array.isArray(value)) return value.length > 0;
+                    if (typeof value === 'object') return Object.keys(value).length > 0 && isObjectPopulated(value);
+                    return false;
+                });
             }
 
-            /**
-             * Generates the final JSON object based on all form inputs.
-             */
+            // Helper to get URLs from container
+            function getUrlsFromContainer(container) {
+                const inputs = container.querySelectorAll('.url-input');
+                const urls = Array.from(inputs).map(input => input.value.trim()).filter(val => val !== '');
+                
+                if (urls.length === 0) return "";
+                if (urls.length === 1) return urls[0];
+                return urls; // Return array if multiple
+            }
+
             function generateJson() {
                 let metadata = getBaseJson();
                 
-                // 1. Populate Core Info
                 metadata.name = nameInput.value || "";
                 metadata.description = descriptionTextarea.value || "";
                 metadata.minting_tool = mintingToolInput.value || "";
                 metadata.sensitive_content = sensitiveContentCheckbox.checked;
                 
-                // 2. Populate Top-Level Attributes
                 const attrRows = attributesContainer.querySelectorAll('.attribute-row');
                 attrRows.forEach(row => {
                     const typeInput = row.querySelector('.attribute-type');
@@ -437,11 +527,9 @@
                     }
                 });
 
-                // 3. Populate Collection
                 metadata.collection.id = collectionIdInput.value || "";
                 metadata.collection.name = collectionNameInput.value || "";
                 
-                // 4. Populate Collection Attributes
                 const collectionAttrRows = collectionAttributesContainer.querySelectorAll('.attribute-row');
                 collectionAttrRows.forEach(row => {
                     const typeInput = row.querySelector('.attribute-type');
@@ -455,63 +543,87 @@
                     }
                 });
 
-                // 5. Populate Data
-                metadata.data["@type"] = dataTypeSelect.value || "";
-                metadata.data.url = dataUrlInput.value || "";
-                metadata.data.encodingFormat = dataEncodingFormatInput.value || "";
-                metadata.data.sha256 = dataSha256Input.value || "";
-                metadata.data.name = metadata.name; // Automatically copy from top-level name
+                const isDataSectionEnabled = enableDataSectionCheckbox.checked;
 
-                // 5a. Populate Data.thumbnail (and check if it has data)
-                const thumbnail = {
-                    "@type": thumbnailTypeSelect.value || "",
-                    "encodingFormat": thumbnailEncodingFormatInput.value || "",
-                    "name": thumbnailNameInput.value || "",
-                    "url": thumbnailUrlInput.value || "",
-                    "sha256": thumbnailSha256Input.value || ""
-                };
-                if (isObjectPopulated(thumbnail)) {
-                    metadata.data.thumbnail = thumbnail;
-                } else {
-                    delete metadata.data.thumbnail; // Remove if empty
+                if (isDataSectionEnabled) {
+                    let data = {
+                        "@context": "https://schema.org/",
+                        "@type": dataTypeSelect.value || "",
+                        "encodingFormat": dataEncodingFormatInput.value || "",
+                        "name": metadata.name, 
+                        "url": getUrlsFromContainer(dataUrlsContainer),
+                        "sha256": dataSha256Input.value || ""
+                    };
+
+                    let creator = {
+                        "@type": creatorTypeSelect.value || "",
+                        "name": creatorNameInput.value || "",
+                        "url": creatorUrlInput.value || "",
+                    };
+
+                    const identifier = {
+                        "@type": identifierTypeSelect.value || "",
+                        "propertyID": identifierPropertyIDInput.value || "",
+                        "value": identifierValueInput.value || ""
+                    };
+                    
+                    if (isObjectPopulated(identifier)) {
+                        creator.identifier = identifier;
+                    } 
+                    
+                    Object.keys(creator).forEach(key => {
+                        if (creator[key] === "") {
+                            delete creator[key];
+                        }
+                    });
+
+                    if (isObjectPopulated(creator)) {
+                        data.creator = creator;
+                    } 
+
+                    let thumbnail = {
+                        "@type": thumbnailTypeSelect.value || "",
+                        "encodingFormat": thumbnailEncodingFormatInput.value || "",
+                        "name": thumbnailNameInput.value || "",
+                        "url": getUrlsFromContainer(thumbnailUrlsContainer),
+                        "sha256": thumbnailSha256Input.value || ""
+                    };
+
+                    Object.keys(thumbnail).forEach(key => {
+                        if (thumbnail[key] === "") {
+                            delete thumbnail[key];
+                        }
+                    });
+                    
+                    if (isObjectPopulated(thumbnail)) {
+                        data.thumbnail = thumbnail;
+                    } 
+                    
+                    Object.keys(data).forEach(key => {
+                        if (data[key] === "") {
+                            delete data[key];
+                        }
+                    });
+
+                    const requiredDataFields = ["@type", "encodingFormat", "url", "sha256", "thumbnail", "creator"];
+                    const isDataPopulated = requiredDataFields.some(key => {
+                        const value = data[key];
+                        if (value === undefined) return false;
+                        if (typeof value === 'string') return value.trim() !== '';
+                        if (typeof value === 'object') return Object.keys(value).length > 0;
+                        if (Array.isArray(value)) return value.length > 0;
+                        return false;
+                    });
+
+                    if (isDataPopulated) {
+                        metadata.data = data;
+                        metadata.format = "CHIP-0015";
+                    }
                 }
-                
-                // 5b. Populate Data.creator (and check if it has data)
-                const creator = {
-                    "@type": creatorTypeSelect.value || "",
-                    "name": creatorNameInput.value || "",
-                    "url": creatorUrlInput.value || "",
-                    "identifier": {}
-                };
 
-                // 5c. Populate Data.creator.identifier (and check if it has data)
-                const identifier = {
-                    "@type": identifierTypeSelect.value || "",
-                    "propertyID": identifierPropertyIDInput.value || "",
-                    "value": identifierValueInput.value || ""
-                };
-                
-                if (isObjectPopulated(identifier)) {
-                    creator.identifier = identifier;
-                } else {
-                    delete creator.identifier; // Remove if empty
-                }
-
-                // Check if creator object has any data (including its populated identifier)
-                if (isObjectPopulated(creator) || creator.identifier) {
-                    metadata.data.creator = creator;
-                } else {
-                    delete metadata.data.creator; // Remove if empty
-                }
-
-                // 6. Display the JSON
                 jsonOutput.textContent = JSON.stringify(metadata, null, 2);
             }
 
-            /**
-             * Copies text to the clipboard.
-             * (No changes from previous version)
-             */
             function copyText(text) {
                 const tempTextarea = document.createElement('textarea');
                 tempTextarea.value = text;
@@ -528,20 +640,12 @@
                 return success;
             }
             
-            /**
-             * Copies the content of the JSON output to the clipboard.
-             * (No changes from previous version)
-             */
             function copyJsonToClipboard() {
                 const textToCopy = jsonOutput.textContent;
                 const success = copyText(textToCopy);
-                showCopyMessage(!success); // Show error if it failed
+                showCopyMessage(!success);
             }
             
-            /**
-             * Shows the "Copied!" message.
-             * (No changes from previous version)
-             */
             function showCopyMessage(isError, customMessage = "") {
                 if(isError) {
                     copyMessage.textContent = customMessage || "Failed to copy!";
@@ -560,65 +664,181 @@
                     copyMessage.style.opacity = '0';
                     setTimeout(() => {
                         copyMessage.style.display = 'none';
-                    }, 500); // Fade out duration
-                }, 2000); // Message visible duration
+                    }, 500);
+                }, 2000);
             }
 
-            /**
-             * Resets the entire form to its default state.
-             */
             function resetForm() {
-                // Reset core info
                 nameInput.value = '';
                 descriptionTextarea.value = '';
                 mintingToolInput.value = '';
                 sensitiveContentCheckbox.checked = false;
-
-                // Reset Top-Level Attributes
                 attributesContainer.innerHTML = '';
-
-                // Reset Collection
                 collectionIdInput.value = '';
                 collectionNameInput.value = '';
                 collectionAttributesContainer.innerHTML = '';
                 
-                // Reset Data
+                enableDataSectionCheckbox.checked = false;
+                dataFieldsContainer.classList.add('hidden');
+                
                 dataTypeSelect.value = '';
-                dataUrlInput.value = '';
+                dataUrlsContainer.innerHTML = '';
+                addUrlRow(dataUrlsContainer, "", true); 
+                
                 dataEncodingFormatInput.value = '';
                 dataSha256Input.value = '';
                 
-                // Reset Thumbnail
                 thumbnailTypeSelect.value = '';
+                thumbnailUrlsContainer.innerHTML = '';
+                addUrlRow(thumbnailUrlsContainer, "", true);
+
                 thumbnailEncodingFormatInput.value = '';
                 thumbnailNameInput.value = '';
-                thumbnailUrlInput.value = '';
                 thumbnailSha256Input.value = '';
 
-                // Reset Creator
                 creatorTypeSelect.value = '';
                 creatorNameInput.value = '';
                 creatorUrlInput.value = '';
 
-                // Reset Identifier
                 identifierTypeSelect.value = '';
                 identifierPropertyIDInput.value = '';
                 identifierValueInput.value = '';
+                
+                hashFeedback.textContent = '';
+                hashFeedback.classList.add('hidden');
 
-                // Trigger JSON update
-                generateJson(); // This will regenerate the base JSON
+                generateJson();
             }
 
-            // --- 4. Event Listeners ---
+            // --- Hashing & UUID Logic ---
+
+            // Robust UUID v4 Generator (Works in non-secure contexts)
+            function generateUUID() {
+                if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+                    try {
+                        return crypto.randomUUID();
+                    } catch (e) {
+                        // Fallback if secure context check fails
+                    }
+                }
+                // Fallback Math-based UUID generator
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+
+            generateUuidButton.addEventListener('click', () => {
+                const uuid = generateUUID();
+                collectionIdInput.value = uuid;
+                // Flash the input to show it worked
+                collectionIdInput.classList.add('bg-gray-800', 'border-orange-500');
+                setTimeout(() => {
+                    collectionIdInput.classList.remove('bg-gray-800', 'border-orange-500');
+                }, 300);
+                generateJson();
+            });
+
+            async function calculateSHA256(file) {
+                const buffer = await file.arrayBuffer();
+                const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+            }
+
+            function handleFileProcess(file) {
+                hashLoader.classList.remove('hidden');
+                hashFeedback.classList.add('hidden');
+                
+                calculateSHA256(file)
+                    .then(hash => {
+                        hashLoader.classList.add('hidden');
+                        
+                        const targetFieldId = hashTargetSelect.value;
+                        const targetInput = document.getElementById(targetFieldId);
+                        
+                        if (targetInput) {
+                            targetInput.value = hash;
+                            
+                            targetInput.dispatchEvent(new Event('input'));
+                            
+                            hashFeedback.textContent = `Generated & Filled: ${hash}`;
+                            hashFeedback.classList.remove('hidden');
+                            
+                            targetInput.classList.add('bg-orange-900', 'border-orange-500');
+                            setTimeout(() => {
+                                targetInput.classList.remove('bg-orange-900', 'border-orange-500');
+                            }, 500);
+                            
+                            generateJson();
+                        }
+                    })
+                    .catch(err => {
+                        hashLoader.classList.add('hidden');
+                        hashFeedback.textContent = "Error calculating hash";
+                        hashFeedback.classList.remove('hidden');
+                        console.error(err);
+                    });
+            }
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-over');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('drag-over');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-over');
+                
+                if (e.dataTransfer.files.length > 0) {
+                    handleFileProcess(e.dataTransfer.files[0]);
+                }
+            });
             
-            // Regenerate JSON on any form input
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileProcess(e.target.files[0]);
+                }
+            });
+
+            // --- Auto-fill Listeners ---
+
+            function flashInput(input) {
+                input.classList.add('bg-gray-800', 'border-orange-500');
+                setTimeout(() => {
+                    input.classList.remove('bg-gray-800', 'border-orange-500');
+                }, 300);
+            }
+
+            dataTypeSelect.addEventListener('change', () => {
+                const selectedType = dataTypeSelect.value;
+                if (dataEncodingMap[selectedType]) {
+                    dataEncodingFormatInput.value = dataEncodingMap[selectedType];
+                    flashInput(dataEncodingFormatInput);
+                    generateJson();
+                }
+            });
+
+            thumbnailTypeSelect.addEventListener('change', () => {
+                const selectedType = thumbnailTypeSelect.value;
+                if (thumbnailEncodingMap[selectedType]) {
+                    thumbnailEncodingFormatInput.value = thumbnailEncodingMap[selectedType];
+                    flashInput(thumbnailEncodingFormatInput);
+                    generateJson();
+                }
+            });
+
+            // --- Event Listeners ---
+            
             form.addEventListener('input', generateJson);
-            
-            // Button clicks
             copyButton.addEventListener('click', copyJsonToClipboard);
             resetButton.addEventListener('click', resetForm);
             
-            // Add Attribute Row Buttons
             addCollectionAttributeButton.addEventListener('click', () => {
                 addAttributeRow(collectionAttributesContainer, 'type', 'value', 'Type (e.g., icon)', 'Value (e.g., https://...)');
             });
@@ -626,12 +846,31 @@
             addAttributeButton.addEventListener('click', () => {
                 addAttributeRow(attributesContainer, 'trait_type', 'value', 'Trait Type (e.g., Category)', 'Value (e.g., Learning Guide)');
             });
+
+            // New URL Button Listeners
+            addDataUrlButton.addEventListener('click', () => {
+                addUrlRow(dataUrlsContainer);
+            });
+
+            addThumbnailUrlButton.addEventListener('click', () => {
+                addUrlRow(thumbnailUrlsContainer);
+            });
+
+            enableDataSectionCheckbox.addEventListener('change', () => {
+                if (enableDataSectionCheckbox.checked) {
+                    dataFieldsContainer.classList.remove('hidden');
+                } else {
+                    dataFieldsContainer.classList.add('hidden');
+                }
+                generateJson();
+            });
             
-            // --- 5. Initial Setup ---
+            // --- Initial Setup ---
+            addUrlRow(dataUrlsContainer, "", true);
+            addUrlRow(thumbnailUrlsContainer, "", true);
             generateJson();
         });
     </script>
 
 </body>
 </html>
-
